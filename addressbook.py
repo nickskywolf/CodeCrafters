@@ -1,9 +1,26 @@
 import calendar
 import csv
 import json
+import string
 from collections import UserDict
 from datetime import datetime
 import re
+
+class PhoneError(Exception):
+    #print('Wrong phone number')
+    pass
+
+class NameError(Exception):
+    pass
+
+class BirthdayError(Exception):
+    pass
+
+class AddressError(Exception):
+    pass
+
+class EmailError(Exception):
+    pass
 
 class Field:
     pass
@@ -21,7 +38,8 @@ class Phone(Field):
         if len(new_phone) == 10 and new_phone.isdigit():
             self.__value = new_phone
         else:
-            raise ValueError("Incorrect phone number! It must contain exactly 10 numbers.")
+            raise ValueError
+            #raise ValueError("Incorrect phone number! It must contain exactly 10 numbers.")
 
     def __repr__(self):
         return self.phone
@@ -84,10 +102,10 @@ class Address(Field):
 
     @town.setter
     def town(self, town: str):
-        if isinstance(town, str):
+        if isinstance(town, str) and town.lower() in string.ascii_lowercase:
             self.__town_value = town.capitalize()
         else:
-            raise ValueError('Town should be a string type')
+            raise ValueError('Town should be a string type without numbers')
 
     @property
     def street(self):
@@ -95,7 +113,7 @@ class Address(Field):
 
     @street.setter
     def street(self, street: str):
-        if isinstance(street, str):
+        if isinstance(street, str) and street.lower() in string.ascii_lowercase:
             self.__street_value = street
         else:
             raise ValueError('Street should be a string type')
@@ -139,7 +157,7 @@ class Email(Field):
         if re.match(pat, email):
             self.__value = email
         else:
-            raise ValueError('Wrong email provided')
+            raise ValueError
 
     def __repr__(self):
         return self.email
@@ -147,11 +165,11 @@ class Email(Field):
     def __str__(self):
         return f'{self.email}'
 class Record:
-    def __init__(self, name: Name, address: Address, email: Email, *phone: Phone, birthday=None):
-        if len(phone) == 0:
-            phone = []
+    def __init__(self, name: Name, address: Address, email: Email, phones: list[Phone], birthday=None):
+        if len(phones) == 0:
+            phones = []
         self.name = name
-        self.phones = list(phone)
+        self.phones = list(phones)
         self.birthday = birthday
         self.address = address
         self.email = email
@@ -277,3 +295,104 @@ class AddressBook(UserDict):
         contacts_list = [contact for contact in self.data.values() if
                          contact.birthday and contact.days_to_birthday() <= number_of_days]
         return contacts_list
+
+
+
+if __name__ == "__main__":
+    ab = AddressBook()
+    while True:
+        print('1. Load data from json file')
+        print("2. Add Record")
+        print("3. Search")
+        print("4. Save")
+        print("5. Save and Exit")
+
+        choice = input("Enter your choice: ")
+        if choice == '1':
+            while True:
+                full_path = input('Provide full path to the json file: ')
+                try:
+                    ab.load_from_file(full_path)
+                    if len(ab) == 0:
+                        print('Nothing to load')
+                    else:
+                        print('Successfully loaded')
+                    break
+                except:
+                    print('Wrong file path. Please try again.')
+        if choice == "2":
+            while True:
+                while True:
+                    name = input("Enter name: ")
+                    try:
+                        name = Name(name)
+                        break
+                    except ValueError:
+                        print('Name can contain only letters!')
+                while True:
+                    number = input('Enter phone: ')
+                    try:
+                        phones = [Phone(number)]
+                        while True:
+                            print('Enter another phone?')
+                            choice = input('1. Yes\n2. No\nChoice: ')
+                            if choice == '1':
+                                number = input('Enter phone: ')
+                                phones.append(Phone(number))
+                            elif choice == '2':
+                                break
+                            else:
+                                print('Wrong option!\n')
+                        break
+                    except ValueError:
+                        print("Incorrect phone number! It must contain exactly 10 numbers.")
+                while True:
+                    email = input('Enter email: ')
+                    try:
+                        email = Email(email)
+                        break
+                    except ValueError:
+                        print('Wrong email provided')
+                while True:
+                    town = input('Town: ')
+                    street = input('Street: ')
+                    building = input('Building: ')
+                    try:
+                        apartment = int(input('Apartment (optional): '))
+                    except ValueError:
+                        apartment = None
+                    try:
+                        address = Address(town,street,building,apartment)
+                        break
+                    except ValueError:
+                        print('Wrong address!')
+
+                while True:
+                    birthday = input('Birthday (dd.mm.yyyy):')
+                    try:
+                        birthday = Birthday(birthday)
+                        break
+                    except ValueError:
+                        print('Wrong date!')
+                rec = Record(name,address,email, phones, birthday=birthday)
+                ab.add_record(rec)
+        elif choice == "3":
+            search_term = input("Enter search term: ")
+            results = ab.search(search_term)
+            if results:
+                for result in results:
+                    print("Name:", result.name.value)
+                    print("Phone:", ", ".join(phone.value for phone in result.phones))
+                    if result.birthday:
+                        print("Birthday:", result.birthday.value)
+                    print("-" * 20)
+            else:
+                print("No results found.")
+        elif choice == "4":
+            ab.save_to_file(ab.file_path)
+            print("Data saved.")
+        elif choice == "5":
+            ab.save_to_file(ab.file_path)
+            print("Data saved. Exiting...")
+            break
+
