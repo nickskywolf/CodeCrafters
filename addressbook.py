@@ -1,6 +1,7 @@
 import calendar
 import csv
 import json
+import os
 import string
 from collections import UserDict
 from datetime import datetime
@@ -102,7 +103,7 @@ class Address(Field):
 
     @town.setter
     def town(self, town: str):
-        if isinstance(town, str) and town.lower() in string.ascii_lowercase:
+        if isinstance(town, str) and string.digits not in town:
             self.__town_value = town.capitalize()
         else:
             raise ValueError('Town should be a string type without numbers')
@@ -113,8 +114,8 @@ class Address(Field):
 
     @street.setter
     def street(self, street: str):
-        if isinstance(street, str) and street.lower() in string.ascii_lowercase:
-            self.__street_value = street
+        if isinstance(street, str) and string.digits not in street:
+            self.__street_value = street.capitalize()
         else:
             raise ValueError('Street should be a string type')
 
@@ -124,7 +125,7 @@ class Address(Field):
 
     @building.setter
     def building(self, building):
-        if isinstance(building, str):
+        if isinstance(building, str) and re.match(r'^\d*[A-Za-z]?$',building):
             self.__building_value = building
         else:
             raise ValueError('Building number must be a string type')
@@ -273,9 +274,7 @@ class AddressBook(UserDict):
 
                     phones = [Phone(phone) for phone in record_data["phones"]]
                     birthday = Birthday(record_data["birthday"]) if record_data["birthday"] else None
-                    rec = Record(name_field,address,email, phones[0], birthday=birthday)
-                    for phone in phones[1:]:
-                        rec.add_phone(phone)
+                    rec = Record(name_field,address,email, phones, birthday=birthday)
                     self.add_record(rec)
         except FileNotFoundError:
             pass
@@ -303,26 +302,31 @@ if __name__ == "__main__":
     while True:
         print('1. Load data from json file')
         print("2. Add Record")
-        print("3. Search")
-        print("4. Save")
-        print("5. Save and Exit")
+        print('3. Edit record')
+        print('4. Remove record')
+        print("5. Search")
+        print("6. Show all contacts")
+        print('7. Show all contacts with the birthday within next n days')
+        print("7. Save")
+        print("8. Save and Exit")
 
         choice = input("Enter your choice: ")
         if choice == '1':
             while True:
-                full_path = input('Provide full path to the json file: ')
-                try:
+                os.system('cls')
+                full_path = input('Provide full path to the desired json file: ')
+                if os.path.isfile(full_path):
                     ab.load_from_file(full_path)
                     if len(ab) == 0:
                         print('Nothing to load')
                     else:
-                        print('Successfully loaded')
-                    break
-                except:
-                    print('Wrong file path. Please try again.')
-        if choice == "2":
-            while True:
+                        print('Successfully loaded\n')
+                        break
+                else:
+                    print('Wrong file path. Please try again.\n')
+        elif choice == "2":
                 while True:
+                    os.system('cls')
                     name = input("Enter name: ")
                     try:
                         name = Name(name)
@@ -338,7 +342,10 @@ if __name__ == "__main__":
                             choice = input('1. Yes\n2. No\nChoice: ')
                             if choice == '1':
                                 number = input('Enter phone: ')
-                                phones.append(Phone(number))
+                                if number in [phone.phone for phone in phones]:
+                                    print("This phone number has already been added!")
+                                else:
+                                    phones.append(Phone(number))
                             elif choice == '2':
                                 break
                             else:
@@ -376,23 +383,66 @@ if __name__ == "__main__":
                         print('Wrong date!')
                 rec = Record(name,address,email, phones, birthday=birthday)
                 ab.add_record(rec)
+                os.system('cls')
+                print('Record successfully added.\n')
         elif choice == "3":
-            search_term = input("Enter search term: ")
-            results = ab.search(search_term)
+            while True:
+                os.system('cls')
+                print("1.Search by number")
+                print("2.Search by name")
+                search_term = input("Option: ")
+                if search_term == '1':
+                    number = input('Enter the number or a part of it to search: ')
+                    results = ab.search_by_number(number)
+                    break
+                elif search_term == '2':
+                    name = input('Enter the name or a part of it to search: ')
+                    results = ab.search_by_name(name)
+                    break
+                else:
+                    print('Wrong option! Please try again')
             if results:
                 for result in results:
-                    print("Name:", result.name.value)
-                    print("Phone:", ", ".join(phone.value for phone in result.phones))
+                    print("Name:", result.name.name)
+                    print("Phone:", ", ".join(phone.phone for phone in result.phones))
+                    print("Email: ", result.email.email)
+                    print("Address: ", result.address)
                     if result.birthday:
-                        print("Birthday:", result.birthday.value)
+                        print("Birthday:", result.birthday.birthday)
                     print("-" * 20)
             else:
                 print("No results found.")
-        elif choice == "4":
-            ab.save_to_file(ab.file_path)
-            print("Data saved.")
+        elif choice == '4':
+            os.system('cls')
+            for contact in ab.list_contacts():
+                print(contact)
+            print('\n')
         elif choice == "5":
-            ab.save_to_file(ab.file_path)
-            print("Data saved. Exiting...")
-            break
+            os.system('cls')
+            while True:
+                full_path = input('Provide full path to the desired json file: ')
+                if os.path.isfile(full_path):
+                    ab.save_to_file(full_path)
+                    if len(ab) == 0:
+                        print('Nothing to save')
+                    else:
+                        print('Data has been successfully saved')
+                    break
+                else:
+                    os.system('cls')
+                    print('Wrong file path. Please try again.')
+        elif choice == "6":
+            os.system('cls')
+            full_path = input('Provide full path to the desired json file: ')
+            if os.path.isfile(full_path):
+                ab.save_to_file(full_path)
+                if len(ab) == 0:
+                    print('Nothing to save')
+                else:
+                    print('Data has been successfully saved')
+                break
+            else:
+                print('Wrong file path. Please try again.')
+        else:
+            print('Wrong choice. Please try again.')
 
