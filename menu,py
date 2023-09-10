@@ -1,0 +1,25 @@
+from address_book import address_book_function
+from note_book import note_book_function
+from parser import parser_function
+
+def main_menu():
+    while True:
+        print("1. Address Book")
+        print("2. Note Book")
+        print("3. Parser")
+        print("4. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            address_book_function()
+        elif choice == "2":
+            note_book_function()
+        elif choice == "3":
+            parser_function()
+        elif choice == "4":
+            print("Exiting the program.")
+            break
+
+if __name__ == "__main__":
+    main_menu()
