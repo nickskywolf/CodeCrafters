@@ -5,7 +5,7 @@ setup(
     version='0.1',
     packages=find_packages(),
     install_requires=[
-        # Зависимости вашего проекта, если они есть
+        #требования
     ],
     entry_points={
         'console_scripts': [
