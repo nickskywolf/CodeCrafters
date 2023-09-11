@@ -199,8 +199,6 @@ class Record:
     def __repr__(self):
         s = f'Name: {self.name}, Address: {self.address}, email: {self.email}, phones: {self.phones}'
         return s if self.birthday is None else f'{s}, birthday: {self.birthday}'
-
-
 class AddressBook(UserDict):
     def __init__(self, N=1):
         super().__init__()
@@ -288,8 +286,7 @@ class AddressBook(UserDict):
         return contacts_list
 
 
-
-if __name__ == "__main__":
+def run():
     ab = AddressBook()
     while True:
         print('1. Load data from json file')
@@ -318,84 +315,85 @@ if __name__ == "__main__":
                 else:
                     print('Wrong file path. Please try again.\n')
         elif choice == "2":
-                while True:
-                    os.system('cls')
-                    name = input("Enter name: ")
-                    try:
-                        name = Name(name)
-                        break
-                    except ValueError:
-                        print('Name can contain only letters!')
-                while True:
-                    number = input('Enter phone: ')
-                    try:
-                        phones = [Phone(number)]
-                        while True:
-                            print('Enter another phone?')
-                            choice = input('1. Yes\n2. No\nChoice: ')
-                            if choice == '1':
-                                number = input('Enter phone: ')
-                                if number in [phone.phone for phone in phones]:
-                                    print("This phone number has already been added!")
-                                else:
-                                    phones.append(Phone(number))
-                            elif choice == '2':
-                                break
+            while True:
+                os.system('cls')
+                name = input("Enter name: ")
+                try:
+                    name = Name(name)
+                    break
+                except ValueError:
+                    print('Name can contain only letters!')
+            while True:
+                number = input('Enter phone: ')
+                try:
+                    phones = [Phone(number)]
+                    while True:
+                        print('Enter another phone?')
+                        choice = input('1. Yes\n2. No\nChoice: ')
+                        if choice == '1':
+                            number = input('Enter phone: ')
+                            if number in [phone.phone for phone in phones]:
+                                print("This phone number has already been added!")
                             else:
-                                print('Wrong option!\n')
-                        break
-                    except ValueError:
-                        print("Incorrect phone number! It must contain exactly 10 numbers.")
-                while True:
-                    email = input('Enter email: ')
-                    try:
-                        if email not in [contact.email.email for contact in ab.list_contacts()]:
-                            email = Email(email)
+                                phones.append(Phone(number))
+                        elif choice == '2':
                             break
                         else:
-                            print('This email is already registered. Please provide another address')
-                    except ValueError:
-                        print('Wrong email provided')
-                while True:
-                    town = input('Town: ')
-                    street = input('Street: ')
-                    building = input('Building: ')
-                    try:
-                        apartment = int(input('Apartment (optional): '))
-                    except ValueError:
-                        apartment = None
-                    try:
-                        address = Address(town,street,building,apartment)
+                            print('Wrong option!\n')
+                    break
+                except ValueError:
+                    print("Incorrect phone number! It must contain exactly 10 numbers.")
+            while True:
+                email = input('Enter email: ')
+                try:
+                    if email not in [contact.email.email for contact in ab.list_contacts()]:
+                        email = Email(email)
                         break
-                    except ValueError:
-                        print('Wrong address!')
+                    else:
+                        print('This email is already registered. Please provide another address')
+                except ValueError:
+                    print('Wrong email provided')
+            while True:
+                town = input('Town: ')
+                street = input('Street: ')
+                building = input('Building: ')
+                try:
+                    apartment = int(input('Apartment (optional): '))
+                except ValueError:
+                    apartment = None
+                try:
+                    address = Address(town, street, building, apartment)
+                    break
+                except ValueError:
+                    print('Wrong address!')
 
-                while True:
-                    birthday = input('Birthday (dd.mm.yyyy):')
-                    try:
-                        birthday = Birthday(birthday)
-                        break
-                    except ValueError:
-                        print('Wrong date!')
-                rec = Record(name,address,email, phones, birthday=birthday)
-                ab.add_record(rec)
-                os.system('cls')
-                print('Record successfully added.\n')
+            while True:
+                birthday = input('Birthday (dd.mm.yyyy):')
+                try:
+                    birthday = Birthday(birthday)
+                    break
+                except ValueError:
+                    print('Wrong date!')
+            rec = Record(name, address, email, phones, birthday=birthday)
+            ab.add_record(rec)
+            os.system('cls')
+            print('Record successfully added.\n')
         elif choice == '3':
             os.system('cls')
             print('Which record do you want to edit?')
             records_dict = {}
-            for idx, record in enumerate(ab.list_contacts(),1):
-                print(str(idx)+'.', record)
-                records_dict.update({idx:record})
+            for idx, record in enumerate(ab.list_contacts(), 1):
+                print(str(idx) + '.', record)
+                records_dict.update({idx: record})
             while True:
                 choice = int(input('\nContact number to edit: '))
-                if choice<=len(records_dict):
+                if choice <= len(records_dict):
                     record = records_dict.get(choice)
                     break
                 else:
                     print('Wrong option. Please try again.')
-            choice = input('What property do you want to edit?:\n1. Name\n2. Address\n3. Email\n4. Phone\n5. Birthday\nOption: ')
+            choice = input(
+                'What property do you want to edit?:\n1. Name\n2. Address\n3. Email\n4. Phone\n5. Birthday\nOption: ')
             if choice == '1':
                 try:
                     new_name = input('Enter the new name: ')
@@ -416,7 +414,8 @@ if __name__ == "__main__":
                     except ValueError:
                         apartment = None
                     try:
-                        ab.list_contacts()[ab.list_contacts().index(record)].edit_address(town,street,building,apartment)
+                        ab.list_contacts()[ab.list_contacts().index(record)].edit_address(town, street, building,
+                                                                                          apartment)
                         break
                     except ValueError:
                         print('Wrong address!')
@@ -447,7 +446,8 @@ if __name__ == "__main__":
                 else:
                     print('Wrong option. Please try again.')
             while True:
-                choice = input(f"Are you sure you want to delete {record.name.name}'s contact?\n1. Yes\n2. No\nOption: ")
+                choice = input(
+                    f"Are you sure you want to delete {record.name.name}'s contact?\n1. Yes\n2. No\nOption: ")
                 if choice == '1':
                     ab.remove_contact(record.name.name)
                     os.system('cls')
@@ -505,7 +505,7 @@ if __name__ == "__main__":
             os.system('cls')
             while True:
                 full_path = input('Provide full path to the desired json file: ')
-                if os.path.isfile(full_path) or re.match(r'[a-zA-z0-9]+.json',os.path.basename(full_path)):
+                if os.path.isfile(full_path) or re.match(r'[a-zA-z0-9]+.json', os.path.basename(full_path)):
                     ab.save_to_file(full_path)
                     if len(ab) == 0:
                         print('Nothing to save')
@@ -518,7 +518,7 @@ if __name__ == "__main__":
         elif choice == "9":
             os.system('cls')
             full_path = input('Provide full path to the desired json file: ')
-            if os.path.isfile(full_path) or re.match(r'[a-zA-z0-9]+.json',os.path.basename(full_path)):
+            if os.path.isfile(full_path) or re.match(r'[a-zA-z0-9]+.json', os.path.basename(full_path)):
                 ab.save_to_file(full_path)
                 if len(ab) == 0:
                     print('Nothing to save')
@@ -530,4 +530,7 @@ if __name__ == "__main__":
         else:
             os.system('cls')
             print('Wrong choice. Please try again.')
+
+if __name__ == "__main__":
+    run()
 
