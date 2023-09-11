@@ -1,6 +1,6 @@
 from address_book import address_book_function
 from note_book import note_book_function
-from parser import parser_function
+from file_sorter import parser_function
 
 def main_menu():
     while True:
