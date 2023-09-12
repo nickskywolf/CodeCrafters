@@ -1,4 +1,5 @@
 from collections import UserList
+import pickle
 
 class Note:
     def __init__(self, note: str):
@@ -73,11 +74,24 @@ class Notebook(UserList):
 
     def search_by_tag(self, tag: Tag):
         matching_records = [record for record in self.data if tag in record.note.tags]
-        return matching_records
+        return matching_records if matching_records else []
 
     def list_records(self):
         for record in self.data:
             print(record)
+
+    def save_to_file(self, filename):
+        with open(filename, 'wb') as file:
+            pickle.dump(self.data, file)
+
+    def load_from_file(self, filename):
+        try:
+            with open(filename, 'rb') as file:
+                self.data = pickle.load(file)
+        except FileNotFoundError:
+            print("Файл не знайдено.")
+        except Exception as e:
+            print(f"Помилка при завантаженні файлу: {str(e)}")
 
 if __name__ == '__main__':
     notebook = Notebook()
@@ -116,3 +130,10 @@ if __name__ == '__main__':
     print("\nВидаляємо запис з тегом 'Hello world!':")
     notebook.remove_record(r2)
     notebook.list_records()
+
+    # Зберігання та завантаження з файлу
+    notebook.save_to_file("notebook_data.pickle")
+    notebook2 = Notebook()
+    notebook2.load_from_file("notebook_data.pickle")
+    print("\nЗавантажені записи з файлу:")
+    notebook2.list_records()
