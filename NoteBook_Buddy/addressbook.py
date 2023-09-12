@@ -1,6 +1,5 @@
 import calendar
 import csv
-import itertools
 import json
 import os
 import string
@@ -25,7 +24,6 @@ class Phone(Field):
             self.__value = new_phone
         else:
             raise ValueError
-            #raise ValueError("Incorrect phone number! It must contain exactly 10 numbers.")
 
     def __repr__(self):
         return self.phone
@@ -571,7 +569,5 @@ def run():
 
 if __name__ == "__main__":
     run()
-    # ab = AddressBook()
-    # ab.load_from_file('example_data.json')
 
 
