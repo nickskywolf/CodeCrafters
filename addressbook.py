@@ -1,6 +1,5 @@
 import calendar
 import csv
-import itertools
 import json
 import os
 import string
@@ -571,7 +570,5 @@ def run():
 
 if __name__ == "__main__":
     run()
-    # ab = AddressBook()
-    # ab.load_from_file('example_data.json')
 
 
