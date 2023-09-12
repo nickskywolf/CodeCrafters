@@ -24,7 +24,6 @@ class Phone(Field):
             self.__value = new_phone
         else:
             raise ValueError
-            #raise ValueError("Incorrect phone number! It must contain exactly 10 numbers.")
 
     def __repr__(self):
         return self.phone
