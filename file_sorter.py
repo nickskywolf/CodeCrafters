@@ -6,7 +6,7 @@ import re
 
 class Sorted:
 
-    user_folder = ""
+   
     all_files_list = list()
 
     filters = { 
@@ -20,23 +20,23 @@ class Sorted:
   
 
     def __init__(self):
-       pass
+       self.user_folder = None
 
     def create_directory(self):
 
         while True:
 
-            self.user_folder = Path(input(r'Input directory: '))
+            user_folder = Path(input(r'Input directory: '))
             
-            if self.user_folder.is_dir():
+            if user_folder.is_dir():
 
-                a = re.findall("/", str(self.user_folder))
+                a = re.findall("/", str(user_folder))
                 if len(a) >= 3:
-                    print(self.user_folder)
+                    print(user_folder)
+                    self.user_folder = user_folder
                     break
             else:
                 print("Your input is not a correct directory. Try again.")
-            
                 
             print(self.user_folder)
         return self.user_folder
@@ -46,17 +46,17 @@ class Sorted:
 
         list_of_files = os.listdir(dir_name)
         
-        allFiles = list()
+        all_files = list()
 
 
         for entry in list_of_files:
             fullPath = os.path.join(dir_name, entry)
             if os.path.isdir(fullPath):
-                allFiles = allFiles + self.get_list_of_files(fullPath)
+                all_files = all_files + self.get_list_of_files(fullPath)
             else:
-                allFiles.append(fullPath)
+                all_files.append(fullPath)
 
-        return allFiles
+        return all_files
 
 
     def create_folder(self, folders_dictionary):
@@ -147,7 +147,7 @@ class Sorted:
         return list(set(list_unknown_ext))   
 
 
-
+    @staticmethod
     def normalize(name: str)-> str:
 
         CYRILLIC = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
@@ -205,78 +205,44 @@ class Sorted:
             print("3. Go back to the main menu")
             
             choice = input("Choose an option: ")
-            directory = ""
 
             if choice == "1":
-
-                directory = self.create_directory()
+                self.create_directory()
                 dest_folders = {
-                        'image'    : str(directory) + '/sort/image/',
-                        'video'    : str(directory) + '/sort/video/',
-                        'docs'     : str(directory) + '/sort/docs/',
-                        'music'    : str(directory) + '/sort/music/',
-                        'archive'  : str(directory) + '/sort/archive/',
-                        'unknown'  : str(directory) + '/sort/unknown/'
+                        'image'    : str(self.user_folder) + '/sort/image/',
+                        'video'    : str(self.user_folder) + '/sort/video/',
+                        'docs'     : str(self.user_folder) + '/sort/docs/',
+                        'music'    : str(self.user_folder) + '/sort/music/',
+                        'archive'  : str(self.user_folder) + '/sort/archive/',
+                        'unknown'  : str(self.user_folder) + '/sort/unknown/'
                     }
                 
                 self.create_folder(dest_folders)
-
-                
-                #sorted_object.add_contact(contact)
                 print("Directory created!")
 
             elif choice == "2": 
 
-                print(f"Directory : {directory}")
-                if directory != "":
-
-
+                print(f"Directory : {self.user_folder}")
+                if self.user_folder:
                 
-                    all_files_list = self.get_list_of_files(directory) 
+                    all_files_list = self.get_list_of_files(self.user_folder) 
 
                     self.sort_file(all_files_list, dest_folders)
 
                     for el in self.create_list_of_sorted_files(dest_folders):
-
                         print(el)
                 
                     print(self.get_list_unknown_ext(dest_folders))
-
-                    
-                    print(self.get_list_of_ext(dest_folders))
-                    
+                    print(self.get_list_of_ext(dest_folders))             
                     self.rename_all_files_in_all_folders(dest_folders)
-                    print("Адресну книгу збережено!")
+                    print("The files have been sorted into destination folders!")
                 else:
                     print("The directory has not been provided. Choose option 1 to create directory.")
 
-            # elif choice == "3":
-            #     filename = input("Введіть ім'я файлу для відновлення: ")
-            #     sorted_object.load_from_file(filename)
-            #     print("Адресну книгу відновлено!")
-
-            # elif choice == "4":
-            #     search_str = input("Введіть рядок для пошуку: ")
-            #     matching_contacts = sorted_object.search_contacts(search_str)
-
-            #     if matching_contacts:
-            #         print("Знайдено контакти:")
-            #         for contact in matching_contacts:
-            #             print(f"Ім'я: {contact.name}, Номер телефону: {contact.phone}")
-            #     else:
-            #         print("Контакти не знайдено!")
-            # elif choice == "5":
-            #     break 
-
-            # directory = self.create_directory()
-
-            # 
-            
-            
-
-            # self.create_folder(dest_folders)
-
-            
+            elif choice == "3":
+                print("Going back to the main menu!")
+                break
+     
 
     @staticmethod
     def main():
@@ -284,9 +250,8 @@ class Sorted:
         sorted_object.run()
         
 if __name__ == "__main__":
-
     Sorted.main()
    
-#/Users/marinavakulenko/Documents/to_sort_copy_2  
+  
          
 
