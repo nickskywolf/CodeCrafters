@@ -9,7 +9,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'mycommand = project_x.menu:main',
+            'startbuddy = NoteBook_Buddy.menu:main',
         ],
     },
 )
