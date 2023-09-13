@@ -19,7 +19,10 @@ class Note:
             raise ValueError('Note must be a string type')
 
     def add_tag(self, tag):
-        self.tags.append(tag)
+        if isinstance(tag, Tag):
+            self.tags.append(tag)
+        else:
+            raise ValueError('Tag must be an instance of the Tag class')
 
     def __repr__(self):
         txt = self.__value.split(' ')[:5]
