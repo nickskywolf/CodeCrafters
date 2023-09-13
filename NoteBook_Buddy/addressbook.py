@@ -7,6 +7,7 @@ from collections import UserDict
 from datetime import datetime
 import re
 
+
 class Field:
     pass
 class Phone(Field):
@@ -547,27 +548,34 @@ def run():
                 else:
                     os.system('cls')
                     print('Wrong file path. Please try again.')
-        elif choice == "9":
+        elif choice == '9':
             os.system('cls')
-            full_path = input('Provide full path to the desired json file: ')
-            if os.path.isfile(full_path) or re.match(r'[a-zA-z0-9]+.json', os.path.basename(full_path)):
-                ab.save_to_file(full_path)
-                if len(ab) == 0:
-                    print('Nothing to save')
+            while True:
+                full_path = input('Provide full path to the desired json file: ')
+                if os.path.isfile(full_path) or re.match(r'[a-zA-z0-9]+.json', os.path.basename(full_path)):
+                    ab.save_to_file(full_path)
+                    if len(ab) == 0:
+                        print('Nothing to save')
+                    else:
+                        print('Data has been successfully saved\n')
+                    input("Press Enter to return to the main menu...")
+                    break
                 else:
                     os.system('cls')
-                    print('Data has been successfully saved')
-                break
-            else:
-                print('Wrong file path. Please try again.')
+                    print('Wrong file path. Please try again.')
         elif choice == '10':
             os.system('cls')
-            quit()
+            print("Exiting the Address Book...")
+            return  # Повертаємо з функції run без повернення до головного меню
         else:
             os.system('cls')
             print('Wrong choice. Please try again.')
 
+def launch_address_book():
+    print("Launching Address Book...")
+    run_adressbook()
+
 if __name__ == "__main__":
-    run()
+    main_menu()
 
 
