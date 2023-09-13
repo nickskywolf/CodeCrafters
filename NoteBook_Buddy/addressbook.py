@@ -38,9 +38,9 @@ class Name(Field):
         return self.__value
 
     @name.setter
-    def name(self, new_name):
-        if new_name.isalpha():
-            self.__value = new_name.capitalize()
+    def name(self, new_name: str):
+        if new_name.replace(' ','').isalpha():
+            self.__value = ' '.join([name.capitalize() for name in new_name.split()])
         else:
             raise ValueError('Name can contain only letters!')
 
@@ -87,7 +87,7 @@ class Address(Field):
 
     @town.setter
     def town(self, town: str):
-        if isinstance(town, str) and town.isalpha():
+        if isinstance(town, str) and town.replace(' ','').isalpha():
             self.__town_value = town.capitalize()
         else:
             raise ValueError('Town should be a string type without numbers')
@@ -98,8 +98,8 @@ class Address(Field):
 
     @street.setter
     def street(self, street: str):
-        if isinstance(street, str) and street.isalpha():
-            self.__street_value = street.capitalize()
+        if isinstance(street, str) and street.replace(' ','').replace('.','').replace(' St','').isalpha():
+            self.__street_value = f'вул. {street[5:].capitalize()}' if 'вул.' in street else street.capitalize()
         else:
             raise ValueError('Street should be a string type')
 
@@ -128,8 +128,13 @@ class Address(Field):
     def __repr__(self):
         address = f'{self.town}, {self.street} {self.building}'
         return address if self.apartment is None else f'{address}/{self.apartment}'
+
+    def __format__(self, format_spec):
+        address = f'{self.town}, {self.street} {self.building}'
+        return address if self.apartment is None else f'{address}/{self.apartment}'
+        
 class Email(Field):
-    def __init__(self, email):
+    def __init__(self, email: str):
         self.__value = None
         self.email = email
 
@@ -148,6 +153,9 @@ class Email(Field):
         return self.email
 
     def __str__(self):
+        return f'{self.email}'
+        
+    def __format__(self, format_spec):
         return f'{self.email}'
 class Record:
     def __init__(self, name: Name, address: Address, email: Email, phones: list[Phone], birthday=None):
@@ -201,14 +209,14 @@ class Record:
             return None
 
     def __repr__(self):
-        s = f'Name: {self.name}, Address: {self.address}, email: {self.email}, phones: {self.phones}'
+        s = f'Name: {self.name}, Address: {self.address}, email: {self.email}, phones: {", ".join([phone.phone for phone in self.phones])}'
         return s if self.birthday is None else f'{s}, birthday: {self.birthday}'
 class AddressBook(UserDict):
     def __init__(self, N=1):
         super().__init__()
         self.N = N  # Кількість записів, які повертаються за одну ітерацію
 
-    def list_contacts(self) -> list:
+    def list_contacts(self) -> list[Record]:
         return [contact for contact in self.data.values()]
 
     # до списку контактів додає об'єкт Record
@@ -259,7 +267,7 @@ class AddressBook(UserDict):
                     name_field = Name(record_data["name"])
                     email = Email(record_data['email'])
                     town, street = record_data['address'].split(',')
-                    street, building = street.strip().split(' ')
+                    street, building = street.strip().rsplit(' ', maxsplit=1)
                     if '/' in building:
                         address = Address(town, street, building.split('/')[0], apartment=int(building.split('/')[1]))
                     else:
@@ -520,9 +528,20 @@ def run():
                 print("No results found.")
         elif choice == '6':
             os.system('cls')
-            for contact in ab.list_contacts():
-                print(contact)
-            print('\n')
+             table_format = "{:<20} {:<35} {:<28} {:<35} {:<12}"
+            header = table_format.format("Name", "Address", "email", "phones", "birthday")
+            table = header + '\n'
+            for row in ab.list_contacts():
+                bday = row.birthday.birthday if row.birthday else 'None'
+                formatted_row = table_format.format(
+                    row.name.name,
+                    f'{row.address.town}, {row.address.street} {row.address.building}/{row.address.apartment}',
+                    row.email.email,
+                    ', '.join([phone.phone for phone in row.phones]),
+                    bday
+                )
+                table += formatted_row + "\n"
+            print(table)
         elif choice == '7':
             os.system('cls')
             while True:
