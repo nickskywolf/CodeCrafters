@@ -17,11 +17,13 @@ def main_menu():
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')  # Очистити екран, в залежності від операційної системи
 
+        print("**********************************************")
         print("Main Menu:")
         print("1. Launch Address Book")
         print("2. Launch Notepad")
         print("3. Launch File Sorter")
         print("4. Exit")
+        print("**********************************************")
 
         choice = input("Enter your choice: ")
 
@@ -48,6 +50,7 @@ def launch_notepad():
     notebook = Notebook()
 
     while True:
+        print("**********************************************")
         print("Notepad Menu:")
         print("1. Add Note")
         print("2. Edit Note")
@@ -57,6 +60,7 @@ def launch_notepad():
         print("6. Save to File")
         print("7. Load from File")
         print("8. Back to Main Menu")
+        print("**********************************************")
 
         choice = input("Enter your choice: ")
 

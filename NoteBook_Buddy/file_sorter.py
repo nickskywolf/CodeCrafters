@@ -199,10 +199,12 @@ class Sorted:
     def run(self):
 
         while True:
+            print("**********************************************")
             print("\nMenu:")
             print("1. Create directory")
             print("2. Sort files")
             print("3. Go back to the main menu")
+            print("**********************************************")
             
             choice = input("Choose an option: ")
 
