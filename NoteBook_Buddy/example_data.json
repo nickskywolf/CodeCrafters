@@ -1,0 +1,224 @@
+{
+    "records": {
+        "Bill": {
+            "name": "Bill",
+            "address": "Warsaw, Prosta 20",
+            "email": "a@b.com",
+            "phones": [
+                "1234567890"
+            ],
+            "birthday": null
+        },
+        "Billq": {
+            "name": "Billq",
+            "address": "\u041a\u0438\u0457\u0432, \u0421\u0430\u0434\u043e\u0432\u0430 18/33",
+            "email": "b@c.dom",
+            "phones": [
+                "1234567891"
+            ],
+            "birthday": null
+        },
+        "Billw": {
+            "name": "Billw",
+            "address": "\u0416\u0438\u0442\u043e\u043c\u0438\u0440, \u041f\u0435\u0440\u0435\u043c\u043e\u0433\u0438 22a/3",
+            "email": "c@d.eom",
+            "phones": [
+                "1234567892"
+            ],
+            "birthday": null
+        },
+        "Bille": {
+            "name": "Bille",
+            "address": "Barcelona, Parallel 34b/15",
+            "email": "d@e.fom",
+            "phones": [
+                "1234567893"
+            ],
+            "birthday": "07.01.2003"
+        },
+        "Billr": {
+            "name": "Billr",
+            "address": "Warsaw, Zelazna 5",
+            "email": "e@f.gom",
+            "phones": [
+                "1234567894"
+            ],
+            "birthday": null
+        },
+        "Billt": {
+            "name": "Billt",
+            "address": "Warsaw, Grzybowska 30/47",
+            "email": "f@g.hom",
+            "phones": [
+                "1234567895",
+                "1234567896",
+                "1234567896"
+            ],
+            "birthday": "12.08.1998"
+        },
+        "\u041c\u0438\u0445\u0430\u0439\u043b\u043e": {
+            "name": "\u041c\u0438\u0445\u0430\u0439\u043b\u043e",
+            "address": "\u0412\u0430\u0440\u0448\u0430\u0432\u0430, \u0416\u0435\u043b\u044f\u0437\u043d\u0430 20/11",
+            "email": "mi@sh.aa",
+            "phones": [
+                "1234567890",
+                "1234567891"
+            ],
+            "birthday": "07.01.2003"
+        },
+        "\u0410\u043d\u0430\u0442\u043e\u043b\u0456\u0439": {
+            "name": "\u0410\u043d\u0430\u0442\u043e\u043b\u0456\u0439",
+            "address": "\u0427\u0435\u0440\u043d\u0456\u0433\u0456\u0432, \u0414\u043e\u0432\u0436\u0435\u043d\u043a\u0430 22/5",
+            "email": "tol@gmail.com",
+            "phones": [
+                "0980345924",
+                "0937279771"
+            ],
+            "birthday": "07.03.1973"
+        },
+        "John doe": {
+            "name": "John Doe",
+            "address": "New york, Main st 123/7",
+            "email": "johndoe@gmail.com",
+            "phones": [
+                "5551234567"
+            ],
+            "birthday": "01.05.1980"
+        },
+        "\u041c\u0430\u0440\u0456\u044f": {
+            "name": "\u041c\u0430\u0440\u0456\u044f",
+            "address": "\u041b\u044c\u0432\u0456\u0432, \u0432\u0443\u043b. \u0428\u0435\u0432\u0447\u0435\u043d\u043a\u0430 45/12",
+            "email": "maria@gmail.com",
+            "phones": [
+                "0978643210"
+            ],
+            "birthday": "12.05.1990"
+        },
+        "\u0418\u0432\u0430\u043d": {
+            "name": "\u0418\u0432\u0430\u043d",
+            "address": "\u0421\u043e\u0444\u0438\u044f, \u0412\u0438\u0442\u043e\u0448\u0430 67/9",
+            "email": "ivan@gmail.com",
+            "phones": [
+                "3598765432"
+            ],
+            "birthday": "03.12.1976"
+        },
+        "Maria rodriguez": {
+            "name": "Maria Rodriguez",
+            "address": "Los angeles, Sunset blvd 567/15",
+            "email": "mariarodriguez@gmail.com",
+            "phones": [
+                "2137894567"
+            ],
+            "birthday": "07.08.1995"
+        },
+        "\u0406\u0440\u0438\u043d\u0430": {
+            "name": "\u0406\u0440\u0438\u043d\u0430",
+            "address": "\u041a\u0438\u0457\u0432, \u0432\u0443\u043b. \u0425\u0440\u0435\u0449\u0430\u0442\u0438\u043a 10/2",
+            "email": "irina@gmail.com",
+            "phones": [
+                "0501122334"
+            ],
+            "birthday": "11.01.1987"
+        },
+        "\u041e\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440": {
+            "name": "\u041e\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440",
+            "address": "\u041e\u0434\u0435\u0441\u0430, \u0432\u0443\u043b. \u0414\u0435\u0440\u0438\u0431\u0430\u0441\u0456\u0432\u0441\u044c\u043a\u0430 56/8",
+            "email": "alexander@gmail.com",
+            "phones": [
+                "0679876543"
+            ],
+            "birthday": "04.02.1982"
+        },
+        "Olga petrovich": {
+            "name": "Olga Petrovich",
+            "address": "Chicago, Lake shore dr 789/11",
+            "email": "olgapetrovich@gmail.com",
+            "phones": [
+                "3125557890"
+            ],
+            "birthday": "02.08.1974"
+        },
+        "\u0412\u0456\u0442\u0430\u043b\u0456\u0439": {
+            "name": "\u0412\u0456\u0442\u0430\u043b\u0456\u0439",
+            "address": "\u0425\u0430\u0440\u043a\u0456\u0432, \u0432\u0443\u043b. \u0421\u0432\u043e\u0431\u043e\u0434\u0438 90/4",
+            "email": "vitaliy@gmail.com",
+            "phones": [
+                "0631234567"
+            ],
+            "birthday": "10.03.1983"
+        },
+        "Natalia gonzalez": {
+            "name": "Natalia Gonzalez",
+            "address": "Miami, Ocean dr 456/13",
+            "email": "nataliagonzalez@gmail.com",
+            "phones": [
+                "3059876543"
+            ],
+            "birthday": "05.07.1990"
+        },
+        "\u041f\u0430\u0432\u043b\u043e": {
+            "name": "\u041f\u0430\u0432\u043b\u043e",
+            "address": "\u041b\u044c\u0432\u0456\u0432, \u0432\u0443\u043b. \u0413\u0430\u043b\u0438\u0446\u044c\u043a\u0430 33/6",
+            "email": "pavlo@gmail.com",
+            "phones": [
+                "0987654321"
+            ],
+            "birthday": "09.04.1981"
+        },
+        "Michael smith": {
+            "name": "Michael Smith",
+            "address": "Toronto, Yonge st 234/10",
+            "email": "michaelsmith@gmail.com",
+            "phones": [
+                "4167891234"
+            ],
+            "birthday": "12.08.1979"
+        },
+        "\u041e\u043a\u0441\u0430\u043d\u0430": {
+            "name": "\u041e\u043a\u0441\u0430\u043d\u0430",
+            "address": "\u0414\u043d\u0456\u043f\u0440\u043e, \u0432\u0443\u043b. \u041e\u0440\u043b\u043e\u0432\u0441\u044c\u043a\u0430 76/2",
+            "email": "oksana@gmail.com",
+            "phones": [
+                "0671122334"
+            ],
+            "birthday": "03.05.1986"
+        },
+        "Elena rodriguez": {
+            "name": "Elena Rodriguez",
+            "address": "Barcelona, Rambla 789/14",
+            "email": "elenarodriguez@gmail.com",
+            "phones": [
+                "3498765431"
+            ],
+            "birthday": "08.03.1994"
+        },
+        "\u0414\u0435\u043d\u0438\u0441": {
+            "name": "\u0414\u0435\u043d\u0438\u0441",
+            "address": "\u0425\u0435\u0440\u0441\u043e\u043d, \u0432\u0443\u043b. \u0423\u043d\u0456\u0432\u0435\u0441\u0438\u0442\u0435\u0442\u0441\u044c\u043a\u0430 12/3",
+            "email": "denis@gmail.com",
+            "phones": [
+                "0555123456"
+            ],
+            "birthday": "01.11.1980"
+        },
+        "Anna smith": {
+            "name": "Anna Smith",
+            "address": "London, Baker st 567/9",
+            "email": "annasmith@gmail.com",
+            "phones": [
+                "4420789123"
+            ],
+            "birthday": "04.11.1992"
+        },
+        "David johnson": {
+            "name": "David Johnson",
+            "address": "Sydney, George st 123/12",
+            "email": "davidjohnson@gmail.com",
+            "phones": [
+                "6129876543"
+            ],
+            "birthday": "11.05.1988"
+        }
+    }
+}
